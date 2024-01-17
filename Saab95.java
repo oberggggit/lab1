@@ -2,15 +2,14 @@ import java.awt.*;
 
 public class Saab95{
 
-    //hej
-
     public boolean turboOn;
     public int nrDoors; // Number of doors on the car
     public double enginePower; // Engine power of the car
     public double currentSpeed; // The current speed of the car
     public Color color; // Color of the car
     public String modelName; // The car model name
-    
+    //TESTCOMMENT TO BE REMOVED
+    // Anothercomment to be removed 2324
     public Saab95(){
         nrDoors = 2;
         color = Color.red;

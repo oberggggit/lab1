@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Saab95{
 
-    //hallå där
+    //hej
 
     public boolean turboOn;
     public int nrDoors; // Number of doors on the car

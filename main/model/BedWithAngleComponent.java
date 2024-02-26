@@ -1,4 +1,6 @@
-public class BedWithAngleComponent {
+package main.model;
+
+public class BedWithAngleComponent implements BedInterface {
 
     private double bedAngle;
 

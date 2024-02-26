@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package main.model;
 
 public interface SubjectInterface {
     void addObserver(ObserverInterface observer);

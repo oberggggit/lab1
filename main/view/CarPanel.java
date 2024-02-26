@@ -1,3 +1,9 @@
+package main.view;
+
+import main.model.CarModel;
+import main.model.Drawable;
+import main.model.ObserverInterface;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -6,7 +12,7 @@ import java.util.List;
 
 // This panel represents the animated part of the view with the car images.
 
-public class CarPanel extends JPanel implements ObserverInterface{ //maybe add extends JFrame
+public class CarPanel extends JPanel implements ObserverInterface { //maybe add extends JFrame
 
 
     List<Point> positions = new ArrayList<>();
@@ -27,6 +33,8 @@ public class CarPanel extends JPanel implements ObserverInterface{ //maybe add e
         this.setPreferredSize(new Dimension(X, Y));
         this.setBackground(Color.white);
     }
+
+
 
 
     public void update() {

@@ -1,3 +1,7 @@
+package main.view;
+
+import main.model.CarModel;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -12,19 +16,19 @@ public class CarFrame extends JFrame {
 
     JPanel controlPanel = new JPanel();
     JPanel gasPanel = new JPanel();
-    JSpinner gasSpinner;
-    int gasAmount = 0; //ev controller
+    public JSpinner gasSpinner;
+    public int gasAmount = 0; //ev controller
     JLabel gasLabel = new JLabel("Amount of gas");
 
-    JButton gasButton = new JButton("GaZz!");
-    JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Truck Lift Bed");
-    JButton lowerBedButton = new JButton("Truck Lower Bed");
+    public JButton gasButton = new JButton("GaZz!");
+    public JButton brakeButton = new JButton("Brake");
+    public JButton turboOnButton = new JButton("Saab Turbo on");
+    public JButton turboOffButton = new JButton("Saab Turbo off");
+    public JButton liftBedButton = new JButton("Truck Lift Bed");
+    public JButton lowerBedButton = new JButton("Truck Lower Bed");
 
-    JButton startButton = new JButton("Start all cars");
-    JButton stopButton = new JButton("Stop all cars");
+    public JButton startButton = new JButton("Start all cars");
+    public JButton stopButton = new JButton("Stop all cars");
 
     public CarFrame(CarModel cm, CarPanel cp) {
         this.cm = cm;

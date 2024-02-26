@@ -1,10 +1,9 @@
-import javax.imageio.ImageIO;
+package main.model;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -96,7 +95,7 @@ public class CarModel implements SubjectInterface, ActionListener {
     }
 
     // Calls the gas method for each car once
-    void gas(int amount) {
+    public void gas(int amount) {
         double gas = ((double) amount) / 100;
         for (Vehicle car : vehicles
                 ) {
@@ -105,7 +104,7 @@ public class CarModel implements SubjectInterface, ActionListener {
     }
 
     // Calls the gas method for each car once
-    void brake(int amount) {
+    public void brake(int amount) {
         double brake = ((double) amount) / 100;
         for (Vehicle car : vehicles
         ) {
@@ -113,21 +112,21 @@ public class CarModel implements SubjectInterface, ActionListener {
         }
     }
 
-    void startAllCars() {
+    public void startAllCars() {
         for (Vehicle car : vehicles
         ) {
             car.startEngine();
         }
     }
 
-    void stopAllCars() {
+    public void stopAllCars() {
         for (Vehicle car : vehicles
         ) {
             car.stopEngine();
         }
     }
 
-    void turboOn() {
+    public void turboOn() {
         for (Vehicle car : vehicles) {
             if (car instanceof Saab95) {
                 ((Saab95) car).setTurboOn();
@@ -135,7 +134,7 @@ public class CarModel implements SubjectInterface, ActionListener {
         }
     }
 
-    void turboOff() {
+    public void turboOff() {
         for (Vehicle car : vehicles) {
             if (car instanceof Saab95) {
                 ((Saab95) car).setTurboOff();
@@ -143,7 +142,7 @@ public class CarModel implements SubjectInterface, ActionListener {
         }
     }
 
-    void liftBed() {
+    public void liftBed() {
         for (Vehicle car : vehicles) {
             if (car instanceof Truck) {
                 ((Truck) car).raiseBed();
@@ -151,7 +150,7 @@ public class CarModel implements SubjectInterface, ActionListener {
         }
     }
 
-    void lowerBed() {
+    public void lowerBed() {
         for (Vehicle car : vehicles) {
             if (car instanceof Truck) {
                 ((Truck) car).lowerBed();

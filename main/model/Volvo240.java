@@ -1,5 +1,10 @@
+package main.model;
+
+import main.view.CarPanel;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 public class Volvo240 extends Car{
@@ -8,9 +13,9 @@ public class Volvo240 extends Car{
 
     
     public Volvo240(){
-        super(4,100,Color.black, "Volvo240", 5643);
+        super(4,100,Color.black, "main.model.Volvo240", 5643);
         try {
-            this.setImage(ImageIO.read(CarPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
+            this.setImage(ImageIO.read(new File("main/model/pics/Volvo240.jpg")));
         } catch (IOException ex)
         {
             ex.printStackTrace();
@@ -18,7 +23,7 @@ public class Volvo240 extends Car{
     }
     
     @Override
-    protected double speedFactor(){
+    public double speedFactor(){
         return getEnginePower() * 0.01 * trimFactor;
     }
 

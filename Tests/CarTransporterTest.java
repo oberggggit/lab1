@@ -1,3 +1,7 @@
+import main.model.HanomagCarTransport;
+import main.model.Saab95;
+import main.model.Vehicle;
+import main.model.Volvo240;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +76,7 @@ class CarTransporterTest {
     }
 
 //    @Test
-//    void loadCarTransporter() { //checking that we can't load another CarTransporter
+//    void loadCarTransporter() { //checking that we can't load another main.model.CarTransporter
 //        hanomag.lowerBed();
 //        assertThrows(IllegalArgumentException.class, () -> {
 //            hanomag.load(hanomag2);

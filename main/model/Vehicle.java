@@ -1,6 +1,8 @@
+package main.model;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-abstract class Vehicle implements Movable, Drawable{
+public abstract class Vehicle implements Movable, Drawable{
 
     private int nrDoors;
     private double enginePower;
@@ -25,7 +27,7 @@ abstract class Vehicle implements Movable, Drawable{
         this.direction = 0; // Riktning i grader (0-360)
     }
 
-    protected int getNrDoors(){return nrDoors;}
+    public int getNrDoors(){return nrDoors;}
 
     public BufferedImage getImage(){return image;}
 
@@ -35,23 +37,23 @@ abstract class Vehicle implements Movable, Drawable{
 
     public int getRegNum(){return regNum;}
 
-    protected double getEnginePower(){
+    public double getEnginePower(){
         return enginePower;
     }
 
-    protected double setEnginePower(double newEnginePower){ return enginePower = newEnginePower;} ////Goes against access/modifier principle stuff (forgot name of principle, whatever)
+    public double setEnginePower(double newEnginePower){ return enginePower = newEnginePower;} ////Goes against access/modifier principle stuff (forgot name of principle, whatever)
 
-    protected double getCurrentSpeed(){return currentSpeed;}
+    public double getCurrentSpeed(){return currentSpeed;}
 
-    protected Color getColor(){return color;}
+    public Color getColor(){return color;}
 
-    protected void setColor(Color clr){ color = clr; }
+    public void setColor(Color clr){ color = clr; }
 
-    protected void startEngine(){
+    public void startEngine(){
 	    currentSpeed = 0.1;
     }
 
-    protected void stopEngine(){
+    public void stopEngine(){
 	    currentSpeed = 0;
     }
 
@@ -59,7 +61,7 @@ abstract class Vehicle implements Movable, Drawable{
         return pt.getLocation();
     }
 
-    protected double getDirection(){
+    public double getDirection(){
         return direction;
     }
 
@@ -67,7 +69,7 @@ abstract class Vehicle implements Movable, Drawable{
         this.pt = newPt.getLocation();
     }
 
-    protected void setDirection(double newDir) {
+    public void setDirection(double newDir) {
         this.direction = newDir;
     }
 

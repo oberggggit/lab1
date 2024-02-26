@@ -1,15 +1,16 @@
+package main.model;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public abstract class CarTransporter extends Truck{ //mabye not abstract
+public abstract class CarTransporter extends Truck{ //maybe not abstract
 
-    private BedComponent bed;
-    private LoadComponent<Car> loadComponent; //TODO Change to car. KLAR
+    //private main.model.BedComponent bed // this is in main.model.Truck now
+    private LoadComponent<Car> loadComponent;
 
     public CarTransporter(int nrDoors, double enginePower, Color color, String modelName, int loadCapacity, int regNum){
-        super(nrDoors, enginePower, color, modelName, regNum);
-        this.bed = new BedComponent();
+        super(nrDoors, enginePower, color, modelName, regNum, new BedComponent());
         this.loadComponent = new LoadComponent<>(loadCapacity); //felixjons
     }
 
@@ -33,7 +34,7 @@ public abstract class CarTransporter extends Truck{ //mabye not abstract
         this.bed.lowerBed(getCurrentSpeed());
     }
 
-    protected int getLoadCapacity(){
+    public int getLoadCapacity(){
         return this.loadComponent.getLoadCapacity();
     }
 
@@ -41,13 +42,13 @@ public abstract class CarTransporter extends Truck{ //mabye not abstract
     public void move() {
         if (isBedUp()) {
             super.move();
-            ArrayList<Vehicle> carList = new ArrayList<>(loadComponent.getCarStack());
+            ArrayList<Car> carList = new ArrayList<>(loadComponent.getCarStack()); //Changed from ArrayList<main.model.Vehicle> to ArrayList<main.model.Car>, reducing a usage dependency from main.model.CarTransporter to main.model.Vehicle.
             for (int i = 0; i < carList.size(); i++) {
                 carList.get(i).setPosition(this.getPosition()); //the carTransporters position should already be changed from super.move()
             }
         }
         else {
-            throw new IllegalArgumentException("CarTransporter cannot move if bed is down.");
+            throw new IllegalArgumentException("main.model.CarTransporter cannot move if bed is down.");
         }
     }
 
@@ -105,7 +106,7 @@ public abstract class CarTransporter extends Truck{ //mabye not abstract
         }
     }
 
-    protected double distanceToCar(Vehicle car){
+    public double distanceToCar(Vehicle car){
         Point currentPosition = this.getPosition();
         Point otherPosition = car.getPosition();
 

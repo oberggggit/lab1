@@ -1,5 +1,6 @@
+package main.model;
 
-public class BedComponent {
+public class BedComponent implements BedInterface {
     private boolean bedUp;
 
     public BedComponent() {

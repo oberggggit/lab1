@@ -1,3 +1,6 @@
+import main.model.Saab95;
+import main.model.Volvo240;
+
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -125,7 +128,7 @@ class VehicleTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.jupiter.api.Test // finns flaggor för att kolla på funkgioner som är private
     void saabgas() {
         //currentspeed is defaulted to 0 here
 

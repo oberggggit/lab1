@@ -1,3 +1,5 @@
+package main.model;
+
 import java.awt.*;
 
 abstract class Car extends Vehicle{

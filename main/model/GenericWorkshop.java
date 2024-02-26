@@ -1,7 +1,9 @@
+package main.model;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-class GenericWorkshop <V extends Vehicle> implements Drawable {
+public class GenericWorkshop <V extends Vehicle> implements Drawable {
 
     private LoadComponent<V> loadComponent;
     private Point position;

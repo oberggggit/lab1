@@ -1,198 +1,86 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
 
 
-/*
-* This class represents the Controller part in the MVC pattern.
-* It's responsibilities is to listen to the View and responds in a appropriate manner by
-* modifying the model state and the updating the view.
- */
+public class CarController { //JFrame extension removed
 
-public class CarController {
-    // member fields:
-
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
-
-    // The frame that represents this instance View of the MVC pattern
-
-    CarView frame;
-
-    private ArrayList<Vehicle> vehicles = new ArrayList<>();
-    private GenericWorkshop<Volvo240> volvoworkshop;
-
-    private TripleManager <BufferedImage, Point, Drawable> tripleImagePointCar = new TripleManager<>();
-
-    private boolean imageRenderingLimiter = false;
-    private BufferedImage volvoworkshopImage;
+    private CarModel cm;
+    private CarFrame cf;
 
 
-
-
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        // create instances of object
-        Saab95 saab = new Saab95();
-        Volvo240 volvo = new Volvo240();
-        Scania scania = new Scania();
-        cc.volvoworkshop = new GenericWorkshop<>(25);
-
-        //load image
-        try {
-            cc.volvoworkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-        cc.volvoworkshop.setImage(cc.volvoworkshopImage);
-
-        //set starting postions
-        volvo.setPosition(new Point(0,0));
-        saab.setPosition(new Point(100, 0));
-        scania.setPosition(new Point(0,200));
-        cc.volvoworkshop.setPosition(new Point(300,0));
-
-        //add to object list
-        cc.vehicles.add(volvo);
-        cc.vehicles.add(saab);
-        cc.vehicles.add(scania);
-
-        //add objects to Triple list
-        cc.tripleImagePointCar.add(cc.volvoworkshop.getImage(),cc.volvoworkshop.getPosition(), cc.volvoworkshop);
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("SimulateDeezCars", cc);
-
-        // Start the timer
-        cc.timer.start();
-
+    // Constructor
+    public CarController(CarModel cm, CarFrame cf){
+        this.cm = cm;
+        this.cf = cf;
+        initButtons();
     }
-
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            for (int i = 0; i < vehicles.size(); i++) {
-                Vehicle car = vehicles.get(i);
-                car.move();
-
-
-                double carX = car.getPosition().getX();
-                double carY = car.getPosition().getY();
-                int width = frame.drawPanel.getWidth(); //TODO This and the one under will be moved into CarView/we will help giving width and height of DrawPanel here some way without nee
-                int height = frame.drawPanel.getHeight(); //Functional Decomposition desirable probably
-
-                if (carX + car.getImage().getWidth() > width || carX < 0) {
-                    car.stopEngine();
-                    car.turnLeft();
-                    car.turnLeft();
-                    car.startEngine();
-
-                } else if (carY + car.getImage().getHeight() > height || carY < 0) {
-                    car.stopEngine();
-                    car.turnLeft();
-                    car.turnLeft();
-                    car.startEngine();
-                }
-                else if (car instanceof Volvo240 && volvoworkshop.getPosition().distance(car.getPosition()) < 5) {
-                    volvoworkshop.loadCar((Volvo240) car); // born to code, forced to cast.
-                    tripleImagePointCar.removeTripleByThird(car);
-                }
-
-                if (!imageRenderingLimiter) { // only add images in first frame. //VI MÅSTE ÄNDRA så images och positions är i en tuple eller ha en typ DrawableObject med ett imageattribut och ett positionsattribut
-                    tripleImagePointCar.add(car.getImage(),car.getPosition(), car);
-
-                } else {
-                    Triple<BufferedImage, Point, Drawable> triple = tripleImagePointCar.findTripleByThird(car);
-                    if (triple != null) {
-                        triple.setSecond(car.getPosition());
-                    }
-                }
-
-
+    private void initButtons() {
+        cf.gasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.gas(cf.gasAmount);
             }
+        });
 
-            imageRenderingLimiter = true;
-            frame.drawPanel.prePaint(tripleImagePointCar.getAllFirstElements(), tripleImagePointCar.getAllSecondElements());
-            frame.drawPanel.repaint(); // repaint() calls the paintComponent method of the panel
-            //TODO We want to move this functionality (all frame calls into Carview, for example using an ActionListener call in CarView that is called each time the loop above has been run that updates the DrawPanel, i.e calls prePaint and repaint etc,
-        }
-    }
-
-
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle car : vehicles
-                ) {
-            car.gas(gas);
-        }
-    }
-
-    // Calls the gas method for each car once
-    void brake(int amount) {
-        double brake = ((double) amount) / 100;
-        for (Vehicle car : vehicles
-        ) {
-            car.brake(brake);
-        }
-    }
-
-    void startAllCars() {
-        for (Vehicle car : vehicles
-        ) {
-            car.startEngine();
-        }
-    }
-
-    void stopAllCars() {
-        for (Vehicle car : vehicles
-        ) {
-            car.stopEngine();
-        }
-    }
-
-    void turboOn() {
-        for (Vehicle car : vehicles) {
-            if (car instanceof Saab95) {
-                ((Saab95) car).setTurboOn();
+        cf.brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { cm.brake(cf.gasAmount);
             }
-        }
+        });
+
+        cf.startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.startAllCars();
+            }
+        });
+
+        cf.stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.stopAllCars();
+            }
+        });
+
+        cf.turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.turboOn();
+            }
+        });
+
+        cf.turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.turboOff();
+            }
+        });
+
+        cf.liftBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.liftBed();
+            }
+        });
+
+        cf.lowerBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.lowerBed();
+            }
+        });
+
+        cf.gasSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                cf.gasAmount = (int) ((JSpinner) e.getSource()).getValue();
+            }
+        });
+
     }
 
-    void turboOff() {
-        for (Vehicle car : vehicles) {
-            if (car instanceof Saab95) {
-                ((Saab95) car).setTurboOff();
-            }
-        }
-    }
-
-    void liftBed() {
-        for (Vehicle car : vehicles) {
-            if (car instanceof Truck) {
-                ((Truck) car).raiseBed();
-            }
-        }
-    }
-
-    void lowerBed() {
-        for (Vehicle car : vehicles) {
-            if (car instanceof Truck) {
-                ((Truck) car).lowerBed();
-            }
-        }
-    }
 }

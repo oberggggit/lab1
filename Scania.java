@@ -10,7 +10,7 @@ public class Scania extends Truck{
         super(2,500, Color.CYAN, "ScaniaTruck", 1234);
         this.bed = new BedWithAngleComponent();
         try {
-            this.setImage(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));
+            this.setImage(ImageIO.read(CarPanel.class.getResourceAsStream("pics/Scania.jpg")));
         } catch (IOException ex)
         {
             ex.printStackTrace();

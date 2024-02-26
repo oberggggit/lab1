@@ -9,7 +9,7 @@ public class Saab95 extends Car{
         super(2,125, Color.red, "Saab95", 4436); //nrDoors = 2; color = Color.red; enginePower = 125; modelName = "Saab95";
         turboOn = false;
         try {
-            this.setImage(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
+            this.setImage(ImageIO.read(CarPanel.class.getResourceAsStream("pics/Saab95.jpg")));
         } catch (IOException ex)
         {
             ex.printStackTrace();

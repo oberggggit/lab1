@@ -18,7 +18,7 @@ public class LoadComponent <V extends Vehicle> { // TODO använd parametrisk pol
         }
     }
 
-    public void load(V car) { //TODO inför begränsing och ändra till V. KLAR
+    public void load(V car) {
         if (carStack.size() >= loadCapacity) {
             throw new IllegalArgumentException("Load capacity is full");
         }

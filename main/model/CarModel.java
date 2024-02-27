@@ -1,10 +1,12 @@
 package main.model;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class CarModel implements SubjectInterface, ActionListener {
@@ -22,10 +24,9 @@ public class CarModel implements SubjectInterface, ActionListener {
 
     public ArrayList<Vehicle> vehicles;
     public ArrayList<Drawable> drawables;
-    private GenericWorkshop<Volvo240> volvoworkshop;
+    public GenericWorkshop<Volvo240> volvoworkshop;
 
     private boolean imageRenderingLimiter = false;
-    private BufferedImage volvoworkshopImage;
 
     private ArrayList<ObserverInterface> observers = new ArrayList<>();
 
@@ -50,7 +51,7 @@ public class CarModel implements SubjectInterface, ActionListener {
 
     public void notifyObservers(){
         for (ObserverInterface observer : observers) {
-            observer.update(); //TODO: Choose what to send as argument
+            observer.update();
         }
     };
 
@@ -82,9 +83,14 @@ public class CarModel implements SubjectInterface, ActionListener {
                 car.turnLeft();
                 car.turnLeft();
                 car.startEngine();
-            } else if (car instanceof Volvo240 && volvoworkshop.getPosition().distance(car.getPosition()) < 5) {
+            } else if (car instanceof Volvo240 && volvoworkshop.getPosition().distance(car.getPosition()) < 10) {
+                System.out.println("d1" + vehicles);
                 volvoworkshop.loadCar((Volvo240) car); // born to code, forced to cast.
                 drawables.remove(car);
+                vehicles.remove(car);
+                System.out.println("d2"+ vehicles);
+                break;
+
             }
 
             if (!imageRenderingLimiter) { // only add images in first frame.
@@ -92,6 +98,7 @@ public class CarModel implements SubjectInterface, ActionListener {
             }
         }
         notifyObservers();
+        imageRenderingLimiter = true;
     }
 
     // Calls the gas method for each car once
@@ -157,4 +164,41 @@ public class CarModel implements SubjectInterface, ActionListener {
             }
         }
     }
+
+    public void addCar() {
+        Random random = new Random();
+        int randomIndex = random.nextInt(2);
+
+        int randomX = random.nextInt(800);
+        int randomY = random.nextInt(800);
+
+        if (randomIndex == 0) {
+            Volvo240 volvo = new Volvo240();
+            volvo.setPosition(new Point(randomX, randomY));
+            vehicles.add(volvo);
+            drawables.add(volvo);
+        }
+        else {
+            Saab95 saab = new Saab95();
+            saab.setPosition(new Point(randomX, randomY));
+            vehicles.add(saab);
+            drawables.add(saab);
+        }
+    }
+
+    public void removeCar() {
+        for (Vehicle car : vehicles) {
+            if (!vehicles.isEmpty()) {
+                if (car instanceof Car) {
+                    vehicles.remove(car);
+                    drawables.remove(car);
+                }
+            }
+            else {
+                  throw new IllegalStateException("No cars to remove");
+           }
+        }
+
+    }
+
 }

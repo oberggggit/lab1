@@ -84,6 +84,18 @@ public class CarController { //JFrame extension removed
                 cf.gasAmount = (int) ((JSpinner) e.getSource()).getValue();
             }
         });
+        cf.addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.addCar();
+            }
+        });
+        cf.removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.removeCar();
+            }
+        });
 
     }
 

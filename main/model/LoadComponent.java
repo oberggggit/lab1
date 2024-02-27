@@ -5,7 +5,7 @@ import java.util.Stack;
 
 
 public class LoadComponent <V extends Vehicle> { // TODO använd parametrisk polymorfism KLAR
-    private Stack<V> carStack; //should imply komposition to main.model.Vehicle since main.model.LoadComponent has attribute with class Stack<main.model.Vehicle>?
+    private Stack<V> carStack; //should imply composition to main.model.Vehicle since main.model.LoadComponent has attribute with class Stack<main.model.Vehicle>?
     private int loadCapacity;
 
     public LoadComponent(int capacity) {

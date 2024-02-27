@@ -28,6 +28,9 @@ public class CarFrame extends JFrame {
     public JButton startButton = new JButton("Start all cars");
     public JButton stopButton = new JButton("Stop all cars");
 
+    public JButton addCarButton = new JButton("Add");
+    public JButton removeCarButton = new JButton("Remove");
+
     public CarFrame(CarModel cm, CarPanel cp) {
         this.cm = cm;
         this.cv = cp;

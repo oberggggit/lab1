@@ -9,8 +9,10 @@ import java.awt.*;
 
 public class CarFrame extends JFrame {
 
-    CarModel cm;
-    CarPanel cv;
+    private int x;
+    private int y;
+
+    CarPanel cp;
 
     JPanel controlPanel = new JPanel();
     JPanel gasPanel = new JPanel();
@@ -31,18 +33,17 @@ public class CarFrame extends JFrame {
     public JButton addCarButton = new JButton("Add");
     public JButton removeCarButton = new JButton("Remove");
 
-    public CarFrame(CarModel cm, CarPanel cp) {
-        this.cm = cm;
-        this.cv = cp;
+    public CarFrame(int x, int y, CarPanel cp) {
+        this.x = x;
+        this.y = y;
+        this.cp = cp;
         initComponents("NutSim 1.3");
     }
 
     private void initComponents(String title) {
         this.setTitle(title);
-        this.setPreferredSize(new Dimension(cm.getWidth(), cm.getHeight()));
+        this.setPreferredSize(new Dimension(x, y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-
-        this.add(cv);
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(100, //initial value
@@ -73,21 +74,21 @@ public class CarFrame extends JFrame {
         controlPanel.add(lowerBedButton, 6);
         controlPanel.add(removeCarButton, 7);
 
-        controlPanel.setPreferredSize(new Dimension((cm.getWidth() / 2) + 4, 100));
+        controlPanel.setPreferredSize(new Dimension((x / 2) + 4, 100));
         controlPanel.setBackground(Color.WHITE);
         this.add(controlPanel);
 
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
-        startButton.setPreferredSize(new Dimension(cm.getWidth() / 5 - 15, 100));
+        startButton.setPreferredSize(new Dimension(x / 5 - 15, 100));
         this.add(startButton);
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
-        stopButton.setPreferredSize(new Dimension(cm.getWidth() / 5 - 15, 100));
+        stopButton.setPreferredSize(new Dimension(x / 5 - 15, 100));
         this.add(stopButton);
 
-        this.add(cv);
+        this.add(cp);
         this.pack();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

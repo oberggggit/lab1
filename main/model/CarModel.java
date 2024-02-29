@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -23,10 +22,7 @@ public class CarModel implements SubjectInterface, ActionListener {
     // The frame that represents this instance View of the MVC pattern
 
     public ArrayList<Vehicle> vehicles;
-    public ArrayList<Drawable> drawables;
     public GenericWorkshop<Volvo240> volvoworkshop;
-
-    private boolean imageRenderingLimiter = false;
 
     private ArrayList<ObserverInterface> observers = new ArrayList<>();
 
@@ -36,7 +32,6 @@ public class CarModel implements SubjectInterface, ActionListener {
         this.height = 800;
         this.timer = new Timer(delay, this);
         this.vehicles = new ArrayList<>();
-        this.drawables = new ArrayList<>();
         this.timer.start();
 
     };
@@ -63,9 +58,15 @@ public class CarModel implements SubjectInterface, ActionListener {
         return this.height;
     };
 
+    public ArrayList<Drawable> getDrawables() {
+        ArrayList<Drawable> drawables = new ArrayList<>(vehicles);
+        drawables.add(volvoworkshop);
+        return drawables;
+    }
+
 
     @Override
-    public void actionPerformed(ActionEvent e) { //Should not be exactly like this though should be a func that is called in Controller.
+    public void actionPerformed(ActionEvent e) {
         for (Vehicle car : vehicles) {
             car.move();
 
@@ -84,21 +85,13 @@ public class CarModel implements SubjectInterface, ActionListener {
                 car.turnLeft();
                 car.startEngine();
             } else if (car instanceof Volvo240 && volvoworkshop.getPosition().distance(car.getPosition()) < 10) {
-                System.out.println("d1" + vehicles);
                 volvoworkshop.loadCar((Volvo240) car); // born to code, forced to cast.
-                drawables.remove(car);
                 vehicles.remove(car);
-                System.out.println("d2"+ vehicles);
                 break;
-
             }
 
-            if (!imageRenderingLimiter) { // only add images in first frame.
-                drawables.add(car);
-            }
         }
         notifyObservers();
-        imageRenderingLimiter = true;
     }
 
     // Calls the gas method for each car once
@@ -151,7 +144,7 @@ public class CarModel implements SubjectInterface, ActionListener {
 
     public void liftBed() {
         for (Vehicle car : vehicles) {
-            if (car instanceof Truck) {
+            if (car instanceof BedInterface) {
                 ((Truck) car).raiseBed();
             }
         }
@@ -159,13 +152,28 @@ public class CarModel implements SubjectInterface, ActionListener {
 
     public void lowerBed() {
         for (Vehicle car : vehicles) {
-            if (car instanceof Truck) {
+            if (car instanceof BedInterface) {
                 ((Truck) car).lowerBed();
             }
         }
     }
 
-    public void addCar() {
+    public void addCar(Vehicle car) {
+        vehicles.add(car);
+    }
+
+    public void addCar(Vehicle car, Point p) {
+        vehicles.add(car);
+        car.setPosition(new Point(p));
+    }
+
+
+    public void addVolvoWorkshop(GenericWorkshop<Volvo240> w)  {
+        this.volvoworkshop = w;
+    }
+
+
+    public void addRandomCar() {
         Random random = new Random();
         int randomIndex = random.nextInt(2);
 
@@ -174,15 +182,13 @@ public class CarModel implements SubjectInterface, ActionListener {
 
         if (randomIndex == 0) {
             Volvo240 volvo = new Volvo240();
-            volvo.setPosition(new Point(randomX, randomY));
+            volvo.setPosition(new Point(randomX, 200));
             vehicles.add(volvo);
-            drawables.add(volvo);
         }
         else {
             Saab95 saab = new Saab95();
             saab.setPosition(new Point(randomX, randomY));
             vehicles.add(saab);
-            drawables.add(saab);
         }
     }
 
@@ -191,7 +197,7 @@ public class CarModel implements SubjectInterface, ActionListener {
             if (!vehicles.isEmpty()) {
                 if (car instanceof Car) {
                     vehicles.remove(car);
-                    drawables.remove(car);
+                    //drawables.remove(car);
                 }
             }
             else {

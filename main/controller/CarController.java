@@ -87,7 +87,7 @@ public class CarController { //JFrame extension removed
         cf.addCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cm.addCar();
+                cm.addRandomCar();
             }
         });
         cf.removeCarButton.addActionListener(new ActionListener() {

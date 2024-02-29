@@ -6,6 +6,12 @@ abstract class Truck extends Vehicle{ // A truck is a main.model.Vehicle with a 
 
     public BedInterface bed;
 
+    /*
+    public static GenerateTruck () \{
+
+    }
+     */
+
     public Truck(int nrDoors, double enginePower, Color color, String modelName, int regNum, BedInterface bed){
         super(nrDoors, enginePower, color, modelName, regNum);
         this.bed = bed;
@@ -13,7 +19,7 @@ abstract class Truck extends Vehicle{ // A truck is a main.model.Vehicle with a 
 
     public boolean isBedUp(){
         return this.bed.isBedUp();
-    } //TODO Maybe change to protected for these 4 methods.
+    }
 
     public boolean isBedDown(){
         return this.bed.isBedDown();
@@ -37,12 +43,10 @@ abstract class Truck extends Vehicle{ // A truck is a main.model.Vehicle with a 
         if (isBedUp()) {
             super.gas(amount);
         }
-        else {
-            throw new IllegalArgumentException("main.model.Truck cannot move if Bed is down.");
-        }
+        //this error seem to impact the movement of the other cars. If we stop and lower the bed, we can only move one car.
+//        else {
+//            throw new IllegalArgumentException("main.model.Truck cannot move if Bed is down.");
+//       }
     }
-
-
-    //TODO Override gas and check if bed is up - has to do this on carTransporter as well -> Might want to restructure our code because of this, schematically
 
 }

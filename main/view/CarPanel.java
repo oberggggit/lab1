@@ -14,20 +14,15 @@ import java.util.List;
 
 public class CarPanel extends JPanel implements ObserverInterface { //maybe add extends JFrame
 
-
-    List<Point> positions = new ArrayList<>();
-    List<BufferedImage> images = new ArrayList<>();
-
     private final int X;
     private final int Y;
 
     CarModel cm;
 
-
     // Initializes the panel and reads the images
-    public CarPanel(int x, int y, CarModel cm) {
-        this.X = x;
-        this.Y = y-140; //buttons take up 140 pixels
+    public CarPanel(CarModel cm) {
+        this.X = cm.getWidth();
+        this.Y = cm.getHeight()-140; //buttons take up 140 pixels
         this.cm = cm;
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(X, Y));
@@ -35,29 +30,15 @@ public class CarPanel extends JPanel implements ObserverInterface { //maybe add 
     }
 
 
-
-
-    public void update() {
-
-        this.positions.clear();
-        this.images.clear();
-
-        for (Drawable drawable : cm.drawables) {
-            this.positions.add(drawable.getPosition());
-            this.images.add(drawable.getImage());
-        }
-
+    public void update() {       // This method is called each time the panel updates/refreshes/repaints itself
         repaint();
-
     }
-
-    // This method is called each time the panel updates/refreshes/repaints itself
 
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Drawable drawable: cm.drawables) {
+        for (Drawable drawable: cm.getDrawables()) {
             g.drawImage(drawable.getImage(), (int) drawable.getPosition().getX(), (int) drawable.getPosition().getY(), null);
         }
     }

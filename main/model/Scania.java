@@ -9,8 +9,6 @@ import java.io.IOException;
 
 public class Scania extends Truck{
 
-    //private main.model.BedWithAngleComponent bed; /This is handled in main.model.Truck
-
     public Scania(){
         super(2,500, Color.CYAN, "ScaniaTruck", 1234, new BedWithAngleComponent());
 
